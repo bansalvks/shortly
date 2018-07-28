@@ -1,3 +1,4 @@
+'use strict';
 const env = process.env.SHORTY_ENV || 'dev';
 
 const configs = {
@@ -21,7 +22,6 @@ const configs = {
             name: 'shortly'
         }
     }
-}
-
+};
 
 module.exports = configs[env];
