@@ -1,0 +1,29 @@
+{
+  "name": "shortly",
+  "version": "1.0.0",
+  "description": "a url shortening application ",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bansalvks/shortly.git"
+  },
+  "keywords": [
+    "url",
+    "shortner",
+    "tiny",
+    "url-manipulation"
+  ],
+  "author": "vikas bansal",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bansalvks/shortly/issues"
+  },
+  "homepage": "https://github.com/bansalvks/shortly#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "mongoose": "^5.2.5"
+  }
+}
