@@ -63,7 +63,33 @@ const find = async (hash) => {
     }
 };
 
+const redirectUrl = async (hash) => {
+    if (hash && typeof hash === 'string' && hash.length > 0) {
+        const data = {
+            hash
+        };
+
+        const response = await shortfyService.find(data);
+        if (response) {
+            const url = response.protocol + '//' + response.urlPath;
+            return url;
+        }
+        else {
+            throw {
+                code: 421,
+                message: 'No mapped url'
+            }
+        }
+    } else {
+        throw {
+            code: 422,
+            message: 'Invalid Url'
+        };
+    }
+};
+
 module.exports = {
     enshort,
-    find
+    find,
+    redirectUrl
 };
