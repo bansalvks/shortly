@@ -1,8 +1,8 @@
 'use strict';
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+let mongoose = require('mongoose');
+let Schema = mongoose.Schema;
 
-var urlSchema = new Schema({
+let urlSchema = new Schema({
     hash: String,
     urlPath: String,
     protocol: String,

@@ -1,8 +1,9 @@
-const urlSchema = require('../schemas/urls');
+'use strict';
+const schema = require('../schemas/urls');
 
 const addUrl = async data => {
     try {
-        let record = new urlSchema(data);
+        const record = new schema(data);
 
         return await record.save();
     } catch (error) {
@@ -15,7 +16,7 @@ const addUrl = async data => {
 
 const find = async data => {
     try {
-        const result = await urlSchema.findOne(data);
+        const result = await schema.findOne(data);
 
         return result;
     } catch (error) {
