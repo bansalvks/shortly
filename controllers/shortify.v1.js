@@ -14,10 +14,10 @@ router.post(path, async function (req, res) {
     }
 });
 
-router.get(path + '/:hash', async function (req, res) {
+router.get(path + '/', async function (req, res) {
     try {
-        const hash = req.params.hash;
-        const response = await shortifyManager.find(hash);
+        const url = req.query.url;
+        const response = await shortifyManager.find(url);
         res.json(response);
     } catch (err) {
         res.status(err.code).json(err);

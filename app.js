@@ -18,7 +18,7 @@ async function init() {
         require('./middleware/index')(app);
 
         await app.listen(config.app.port);
-        console.log('Magic is happeing at http://localhost:' + config.app.port);
+        console.info('Magic is happeing at http://localhost:' + config.app.port);
     } catch (error) {
         console.error('fatal error:', error);
     }
