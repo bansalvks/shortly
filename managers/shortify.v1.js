@@ -79,7 +79,9 @@ const find = async (hash) => {
     }
 };
 
-const redirectUrl = async (hash) => {
+const redirectUrl = async (req) => {
+    const hash = req.params.hash;
+
     if (hash && typeof hash === 'string' && hash.length > 0) {
         const data = {
             hash
@@ -87,7 +89,10 @@ const redirectUrl = async (hash) => {
 
         const response = await shortfyService.find(data);
         if (response) {
-            const url = response.protocol + '//' + response.urlPath;
+            const url = (response.protocol || 'http:') + '//' + response.urlPath;
+
+            // add analytics
+            analyticsService.log(req, analyticsService.analyticsTypes[1], hash);
 
             return url;
         } else {
