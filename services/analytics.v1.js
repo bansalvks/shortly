@@ -13,8 +13,7 @@ const log = async (req, type, urlHash) => {
             origin: req.headers.origin,
             referer: req.headers.referrer || req.headers.referer,
             userAgent: req.headers['user-agent'],
-            isIpad,
-            isAndroid,
+            device: isIpad ? 'apple' : isAndroid ? 'android' : 'windows',
             urlHash
         };
 
@@ -26,7 +25,52 @@ const log = async (req, type, urlHash) => {
     }
 };
 
+const urlStats = async (hash) => {
+    try {
+        const groupByType = await schema.aggregate(
+            [
+                { $match: { urlHash: hash } },
+
+                {
+                    $group: {
+                        _id: { type: '$type' },
+                        hits: { $sum: 1 },
+                        userAgents: { $addToSet: '$userAgent' },
+                        device: { $addToSet: '$device' },
+                        ip: { $addToSet: '$ip' },
+                        host: { $addToSet: '$host' },
+                        origin: { $addToSet: '$origin' },
+                        referer: { $addToSet: '$referer' }
+                    }
+                },
+
+                {
+                    $project: {
+                        _id: 0,
+                        type: '$_id.type',
+                        hits: 1,
+                        userAgents: 1,
+                        device: 1,
+                        ip: { $size: '$ip' },
+                        host: { $size: '$host' },
+                        origin: { $size: '$origin' },
+                        referer: { $size: '$referer' }
+                    }
+                }
+            ]
+        );
+
+        return groupByType;
+    } catch (error) {
+        throw {
+            code: 500,
+            message: error.message
+        };
+    }
+};
+
 module.exports = {
     log,
-    analyticsTypes
+    analyticsTypes,
+    urlStats
 };
