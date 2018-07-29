@@ -12,12 +12,21 @@ const removeWWW = url => {
     return url;
 };
 
+const isValidUri = url => {
+    if (!url.startsWith('http://') || url.startsWith('https://')) {
+        url = 'http://' + url;
+    }
+    return validUrl.isUri(url);
+}
+
 const enshort = async (url) => {
-    if (url && typeof url === 'string' && url.length > 0 && validUrl.isUri(url)) {
+
+    if (url && typeof url === 'string' && url.length > 0 && isValidUri(url)) {
         const parsedUrl = URL.parse(url);
 
-        const urlPath = parsedUrl.host + parsedUrl.path;
-        const hash = md5(removeWWW(urlPath));
+        const urlPath = (parsedUrl.host || '') + parsedUrl.path;
+        const hashTarget = removeWWW(urlPath).replace(/\/+$/, ""); // remove www and trailing slashes
+        const hash = md5(hashTarget);
 
         const data = {
             hash,
