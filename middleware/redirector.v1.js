@@ -1,7 +1,4 @@
 'use strict';
-const express = require('express');
-const router = express.Router();
-
 const shortifyManager = require('../managers/shortify.v1');
 
 module.exports = app => {

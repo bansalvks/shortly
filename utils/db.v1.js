@@ -7,13 +7,13 @@ module.exports = {
             const { db: { host, port, name } } = config;
             const connectionString = `mongodb://${host}:${port}/${name}`;
             mongoose.connect(connectionString);
-            var db = mongoose.connection;
+            const db = mongoose.connection;
             db.on('error', (error) => {
                 reject(error);
                 console.error('mongod connection error:');
             });
             db.once('open', function callback() {
-                console.log('mongo is connected');
+                console.info('mongo is connected');
                 resolve();
             });
         });

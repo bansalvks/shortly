@@ -1,8 +1,10 @@
+'use strict';
 const validUrl = require('valid-url');
 const URL = require('url');
 const md5 = require('md5');
 const shortfyService = require('../services/shortfy.v1');
 const config = require('../config');
+const analyticsService = require('../services/analytics.v1');
 
 const removeWWW = url => {
     if (url.startsWith('www.')) {
@@ -16,16 +18,18 @@ const isValidUri = url => {
     if (!url.startsWith('http://') || url.startsWith('https://')) {
         url = 'http://' + url;
     }
-    return validUrl.isUri(url);
-}
 
-const enshort = async (url) => {
+    return validUrl.isUri(url);
+};
+
+const enshort = async (req) => {
+    const url = req.body.url;
 
     if (url && typeof url === 'string' && url.length > 0 && isValidUri(url)) {
         const parsedUrl = URL.parse(url);
 
         const urlPath = (parsedUrl.host || '') + parsedUrl.path;
-        const hashTarget = removeWWW(urlPath).replace(/\/+$/, ""); // remove www and trailing slashes
+        const hashTarget = removeWWW(urlPath).replace(/\/+$/, ''); // remove www and trailing slashes
         const hash = md5(hashTarget);
 
         const data = {
@@ -34,13 +38,16 @@ const enshort = async (url) => {
             protocol: parsedUrl.protocol
         };
 
-        const existingRecord = await find(hash);
+        let record = await find(hash);
 
-        if (!existingRecord || !existingRecord.urlPath) {
-            await shortfyService.addUrl(data);
+        if (!record || !record.urlPath) {
+            record = await shortfyService.addUrl(data);
         }
 
         const shortedUrl = config.appHost + '/' + hash;
+
+        // add analytics
+        analyticsService.log(req, analyticsService.analyticsTypes[0], hash);
 
         return { shortedUrl };
     } else {
@@ -81,13 +88,13 @@ const redirectUrl = async (hash) => {
         const response = await shortfyService.find(data);
         if (response) {
             const url = response.protocol + '//' + response.urlPath;
+
             return url;
-        }
-        else {
+        } else {
             throw {
                 code: 421,
                 message: 'No mapped url'
-            }
+            };
         }
     } else {
         throw {
