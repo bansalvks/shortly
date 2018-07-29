@@ -10,7 +10,8 @@ const configs = {
             host: 'localhost',
             port: 27017,
             name: 'shortly'
-        }
+        },
+        appHost: 'http://localhost:3000'
     },
     prod: {
         app: {
@@ -20,7 +21,9 @@ const configs = {
             host: 'localhost',
             port: 27017,
             name: 'shortly'
-        }
+        },
+        appHost: 'http://localhost:3000'
+
     }
 };
 

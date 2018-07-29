@@ -3,9 +3,19 @@ const config = require('./config');
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const app = express();
+const db = require('./utils/db.v1');
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+async function init() {
+    await db.init(config);
 
-app.listen(config.app.port);
+    const app = express();
+
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(bodyParser.json());
+
+    require('./controllers/index')(app);
+
+    app.listen(config.app.port);
+}
+
+init();
