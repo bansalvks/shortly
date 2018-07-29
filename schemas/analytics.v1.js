@@ -12,7 +12,7 @@ let analyticsSchema = new Schema({
     userAgent: String,
     timeStamp: { type: Date, default: Date.now },
     isIpad: String,
-    isAndroid: String,
+    device: String,
     urlHash: String
 });
 
