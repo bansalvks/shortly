@@ -5,7 +5,7 @@ const config = require('../config');
 const analyticsService = require('../services/analytics.v1');
 const common = require('../utils/common');
 
-const enshort = async (req) => {
+const enshort = async req => {
     const url = req.body.url;
 
     if (url && typeof url === 'string' && url.length > 0 && common.isValidUri(url)) {
@@ -19,7 +19,7 @@ const enshort = async (req) => {
             protocol: parsedUrl.protocol
         };
 
-        let record = await find(hash);
+        let record = await _findByHash(hash);
 
         if (!record || !record.urlPath) {
             record = await shortfyService.addUrl(data);
@@ -39,7 +39,20 @@ const enshort = async (req) => {
     }
 };
 
-const find = async (hash) => {
+const find = url => {
+    if (url && typeof url === 'string' && url.length > 0 && common.isValidUri(url)) {
+        const hash = common.hashUrl(url);
+
+        return _findByHash(hash);
+    } else {
+        throw {
+            code: 422,
+            message: 'Invalid Url'
+        };
+    }
+};
+
+const _findByHash = async hash => {
     if (hash && typeof hash === 'string' && hash.length > 0) {
         const data = {
             hash
