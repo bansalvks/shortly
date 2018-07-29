@@ -14,6 +14,7 @@ async function init() {
     app.use(bodyParser.json());
 
     require('./controllers/index')(app);
+    require('./middleware/index')(app);
 
     app.listen(config.app.port);
 }
