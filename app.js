@@ -6,17 +6,22 @@ const bodyParser = require('body-parser');
 const db = require('./utils/db.v1');
 
 async function init() {
-    await db.init(config);
+    try {
+        await db.init(config);
 
-    const app = express();
+        const app = express();
 
-    app.use(bodyParser.urlencoded({ extended: true }));
-    app.use(bodyParser.json());
+        app.use(bodyParser.urlencoded({ extended: true }));
+        app.use(bodyParser.json());
 
-    require('./controllers/index')(app);
-    require('./middleware/index')(app);
+        require('./controllers/index')(app);
+        require('./middleware/index')(app);
 
-    app.listen(config.app.port);
+        await app.listen(config.app.port);
+        console.log('Magic is happeing at http://localhost:' + config.app.port);
+    } catch (error) {
+        console.error('fatal error:', error);
+    }
 }
 
 init();
