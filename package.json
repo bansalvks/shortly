@@ -4,7 +4,7 @@
   "description": "a url shortening application ",
   "main": "app.js",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --recursive --exit",
     "pretest": "eslint --ignore-path .gitignore .",
     "fix": "eslint --fix --ignore-path .gitignore .",
     "start": "node app.js"
@@ -38,6 +38,7 @@
     "eslint": "^5.2.0",
     "eslint-config-strongloop": "^2.1.0",
     "mocha": "^5.2.0",
+    "mocha-steps": "^1.1.0",
     "prettier": "^1.13.7"
   }
 }

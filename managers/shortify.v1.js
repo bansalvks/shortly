@@ -53,10 +53,25 @@ const find = url => {
 };
 
 const remove = async url => {
+    // check if valid url
     if (url && typeof url === 'string' && url.length > 0 && common.isValidUri(url)) {
+        // get hash of the url
         const hash = common.hashUrl(url);
 
-        return await shortfyService.remove({ hash });
+        // delete by hash
+        const response = await shortfyService.remove({ hash });
+
+        let output = {};
+        if (response.ok === 1) {
+            output.count = response.n;
+        } else if (response.ok !== 1) {
+            throw {
+                code: 422,
+                meessage: 'Unable to delete'
+            };
+        }
+
+        return output;
     } else {
         throw {
             code: 422,
