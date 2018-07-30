@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 // initialize mongodb
-const db = require('./utils/db.v1').init(config);
+require('./utils/db.v1').init(config);
 
 // initialize express
 const app = express();
