@@ -30,6 +30,7 @@ const find = async data => {
 const remove = async data => {
     try {
         const result = await schema.remove(data);
+
         return result;
     } catch (error) {
         throw {
@@ -37,7 +38,7 @@ const remove = async data => {
             message: error.message
         };
     }
-}
+};
 
 module.exports = {
     addUrl,

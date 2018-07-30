@@ -3,25 +3,22 @@ const config = require('./config');
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const db = require('./utils/db.v1');
+// initialize mongodb
+require('./utils/db.v1').init(config);
 
-async function init() {
-    try {
-        await db.init(config);
+// initialize express
+const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-        const app = express();
+// initalize controllers
+require('./controllers/index')(app);
+require('./middleware/index')(app);
 
-        app.use(bodyParser.urlencoded({ extended: true }));
-        app.use(bodyParser.json());
+// start server
+const server = app.listen(config.app.port, function () {
+    console.info('Magic is happeing at http://localhost:' + config.app.port);
+});
 
-        require('./controllers/index')(app);
-        require('./middleware/index')(app);
-
-        await app.listen(config.app.port);
-        console.info('Magic is happeing at http://localhost:' + config.app.port);
-    } catch (error) {
-        console.error('fatal error:', error);
-    }
-}
-
-init();
+// export server for unit testing
+module.exports = server;

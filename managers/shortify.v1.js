@@ -55,7 +55,8 @@ const find = url => {
 const remove = async url => {
     if (url && typeof url === 'string' && url.length > 0 && common.isValidUri(url)) {
         const hash = common.hashUrl(url);
-        return await shortfyService.remove({hash});
+
+        return await shortfyService.remove({ hash });
     } else {
         throw {
             code: 422,
