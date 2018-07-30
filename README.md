@@ -3,6 +3,7 @@ A URL shortening application
 
 # run
 npm start
+
 Note: Mongo should be running on *27017* port. You can change the config from ```./config.js``` file
 
 # eslint fix
