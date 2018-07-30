@@ -2,7 +2,6 @@
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const { step } = require('mocha-steps');
 const server = require('../../app');
 
 chai.should();
@@ -78,7 +77,7 @@ describe('enshorting url test', function () {
 describe('delete url test', function () {
 
     // step 1: create a short url
-    step('create a short url', function (done) {
+    it('create a short url', function (done) {
         chai.request(server)
             .post('/api/url/shortify')
             .set('content-type', 'application/json')
@@ -91,7 +90,7 @@ describe('delete url test', function () {
     });
 
     // step 2: delete the short url
-    step('delete a short url', function (done) {
+    it('delete a short url', function (done) {
         chai.request(server)
             .delete('/api/url/shortify')
             .set('content-type', 'application/json')
@@ -104,9 +103,8 @@ describe('delete url test', function () {
             });
     });
 
-
     // step 3: delete the same short url
-    step('delete a non existing short url', function (done) {
+    it('delete a non existing short url', function (done) {
         chai.request(server)
             .delete('/api/url/shortify')
             .set('content-type', 'application/json')
@@ -115,6 +113,37 @@ describe('delete url test', function () {
                 res.should.have.status(200);
                 res.body.should.have.property('count');
                 res.body.count.should.equal(0);
+                done();
+            });
+    });
+});
+
+describe('fetch short url details', function () {
+
+    // step 1. create a short url
+    it('it should give short url', function (done) {
+        chai.request(server)
+            .post('/api/url/shortify')
+            .set('content-type', 'application/json')
+            .send({ url: urls[0] })
+            .then(res => {
+                res.should.have.status(200);
+                res.body.should.have.property('shortedUrl');
+                done();
+            });
+    });
+
+    // step 2. get the details of the short url
+    it('get the details of existing short url', function (done) {
+        chai.request(server)
+            .get('/api/url/shortify?url=' + urls[0])
+            .send()
+            .then(res => {
+                res.should.have.status(200);
+                res.body.should.have.property('hash');
+                res.body.should.have.property('urlPath');
+                res.body.should.have.property('protocol');
+                res.body.should.have.property('timeStamp');
                 done();
             });
     });
