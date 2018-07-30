@@ -3,6 +3,7 @@ A URL shortening application
 
 # run
 npm start
+Note: Mongo should be running on *27017* port. You can change the config from ```./config.js``` file
 
 # eslint fix
 npm run fix
@@ -56,7 +57,24 @@ GET
 }
 ```
 
-## 3. /api/url/stats ##
+## 3. /api/url/shortify
+This api will delete the provided url
+
+**METHOD**
+DELETE
+
+**HEADERS**
+Content-Type    :   application/json
+
+**BODY**
+
+```
+{
+    "url": "http://google.com/"
+}
+```
+
+## 4. /api/url/stats ##
 This api will fetch the statistics of the enshorted url
 
 **METHOD**

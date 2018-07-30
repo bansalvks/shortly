@@ -24,4 +24,14 @@ router.get(path + '/', async function (req, res) {
     }
 });
 
+router.delete(path + '/', async function (req, res) {
+    try {
+        const url = req.body.url;
+        const response = await shortifyManager.remove(url);
+        res.json(response);
+    } catch (err) {
+        res.status(err.code).json(err);
+    }
+});
+
 module.exports = router;

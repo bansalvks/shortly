@@ -27,7 +27,20 @@ const find = async data => {
     }
 };
 
+const remove = async data => {
+    try {
+        const result = await schema.remove(data);
+        return result;
+    } catch (error) {
+        throw {
+            code: 500,
+            message: error.message
+        };
+    }
+}
+
 module.exports = {
     addUrl,
-    find
+    find,
+    remove
 };
