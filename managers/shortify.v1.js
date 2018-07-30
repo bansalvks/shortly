@@ -52,6 +52,18 @@ const find = url => {
     }
 };
 
+const remove = async url => {
+    if (url && typeof url === 'string' && url.length > 0 && common.isValidUri(url)) {
+        const hash = common.hashUrl(url);
+        return await shortfyService.remove({hash});
+    } else {
+        throw {
+            code: 422,
+            message: 'Invalid Url'
+        };
+    }
+};
+
 const _findByHash = async hash => {
     if (hash && typeof hash === 'string' && hash.length > 0) {
         const data = {
@@ -106,5 +118,6 @@ const redirectUrl = async (req) => {
 module.exports = {
     enshort,
     find,
-    redirectUrl
+    redirectUrl,
+    remove
 };
