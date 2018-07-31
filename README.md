@@ -7,11 +7,18 @@ npm install
 npm start
 
 # run UI
-_goto: public/shortly-ui_ 
+_goto: shortly-ui_ 
 
 npm install
 
 npm start
+
+# build UI
+goto shortly-ui
+
+npm build
+
+_output will be in the public folder of node application_
 
 Note: Mongo should be running on *27017* port. You can change the config from ```./config.js``` file
 
