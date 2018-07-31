@@ -1,0 +1,24 @@
+<div class="dashboard">
+  <div class="container">
+    <div class="row">
+      <div class="form-group">
+        <label for="usr">Name:</label>
+        <input type="text" class="form-control" placeholder="Puth the URL here..." [(ngModel)]="targetUrl" />
+      </div>
+    </div>
+
+    <div class="row">
+      <button type="button" class="btn btn-primary" (click)="enshort()">Enshort</button>
+
+      <button type="button" class="btn btn-danger action-button" (click)="delete()">Delete</button>
+
+      <button type="button" class="btn btn-info action-button" (click)="stats()">Get Status</button>
+    </div>
+
+    <div *ngIf="shortedUrl" class="row">
+      <pre class="output">
+        <a href="{{shortedUrl}}">{{shortedUrl}}</a>
+      </pre>
+    </div>
+  </div>
+</div>

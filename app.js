@@ -2,6 +2,7 @@
 const config = require('./config');
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 // initialize mongodb
 require('./utils/db.v1').init(config);
@@ -10,6 +11,7 @@ require('./utils/db.v1').init(config);
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cors());
 
 // initalize controllers
 require('./controllers/index')(app);
