@@ -5,7 +5,8 @@ A URL shortening application
 npm start
 
 # run UI
-_goto: public/shortly-ui_
+_goto: public/shortly-ui_ 
+
 npm start
 
 Note: Mongo should be running on *27017* port. You can change the config from ```./config.js``` file
