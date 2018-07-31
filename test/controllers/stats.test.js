@@ -3,7 +3,6 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../../app');
-const common = require('../../utils/common');
 
 // const expect = chai.expect;
 
@@ -19,8 +18,7 @@ const urls = [
     'https://google.com',
     'https://www.google.com'];
 
-describe('redirect test', function () {
-    let shortUrl = '';
+describe('stats test', function () {
     // step 1. create a short url
     it('it should give short url', function (done) {
         chai.request(server)
@@ -30,24 +28,19 @@ describe('redirect test', function () {
             .then(res => {
                 res.should.have.status(200);
                 res.body.should.have.property('shortedUrl');
-                shortUrl = res.body.shortedUrl;
                 done();
             });
     });
 
-    // step 2. get the redirect details
-    it('it should redirect to the orignal url', function (done) {
-        const hash = shortUrl.substr(shortUrl.lastIndexOf('/') + 1);
+    // step 2. get the stats of the short url
+    it('it should get stats of the short url', function (done) {
         chai.request(server)
-            .get('/' + hash)
-            .redirects(0)
-            .send()
+            .post('/api/url/stats')
+            .set('content-type', 'application/json')
+            .send({ url: urls[0] })
             .then(res => {
-                // check redirection status code
-                res.should.have.status(302);
-                // match the hash of the redirected url with the target url
-                const redirectedToHash = common.hashUrl(res.header.location);
-                hash.should.be.eql(redirectedToHash);
+                res.body.should.be.an('array');
+                res.should.have.status(200);
                 done();
             });
     });

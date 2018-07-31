@@ -13,7 +13,6 @@ npm run fix
 pretest
 
 # TODO
-* Integrate Unit testing framework e.g. mocha chai
 * Make UI to use the shortly
 
 # API
