@@ -11,7 +11,8 @@ export class DashboardComponent {
   shortlyBaseUrl: string = 'http://localhost:3000/';
   targetUrl: string = '';
   shortedUrl: string;
-  statusData: any;
+  statsData: any;
+  history: string[] = [];
 
   constructor(private apiService: ApiService) { }
 
@@ -19,9 +20,10 @@ export class DashboardComponent {
     this.apiService.enshort(this.targetUrl).subscribe(
       (data: any) => {
         this.shortedUrl = data.shortedUrl;
+        this.history.push(this.shortedUrl);
       },
       error => {
-        alert(error.message);
+        alert(error.error.message);
       });
   }
 
@@ -32,18 +34,17 @@ export class DashboardComponent {
         this.shortedUrl = '';
       },
       error => {
-        alert(error.message);
+        alert(error.error.message);
       });
   }
 
-  status() {
-    this.apiService.enshort(this.targetUrl).subscribe(
+  stats() {
+    this.apiService.stats(this.targetUrl).subscribe(
       (data: any) => {
-        this.statusData = data;
-        console.log(data);
+        this.statsData = data;
       },
       error => {
-        alert(error.message);
+        alert(error.error.message);
       });
   }
 
