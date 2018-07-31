@@ -9,6 +9,9 @@ Note: Mongo should be running on *27017* port. You can change the config from ``
 # eslint fix
 npm run fix
 
+# test
+npm test
+
 # pretest
 pretest
 
