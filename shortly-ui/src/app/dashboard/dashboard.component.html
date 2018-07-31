@@ -29,5 +29,10 @@
         </li>
       </ul>
     </div>
+
+    <div class="row" *ngIf="statsData">
+      <h2>Statistics</h2>
+      <pre class="output">{{statsData | json}}</pre>
+    </div>
   </div>
 </div>

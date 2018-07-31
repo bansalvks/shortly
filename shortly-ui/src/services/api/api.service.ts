@@ -34,7 +34,7 @@ export class ApiService {
   }
 
   stats(url: string) {
-    const apiUrl = this.baseUrl + 'status';
+    const apiUrl = this.baseUrl + 'stats';
 
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
