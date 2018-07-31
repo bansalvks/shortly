@@ -2,6 +2,9 @@
 A URL shortening application
 
 # run server
+
+Note: Mongo should be running on *27017* port. You can change the config from ```./config.js``` file
+
 npm install
 
 npm start
@@ -19,8 +22,6 @@ goto shortly-ui
 npm build
 
 _output will be in the public folder of node application_
-
-Note: Mongo should be running on *27017* port. You can change the config from ```./config.js``` file
 
 # eslint fix
 npm run fix
