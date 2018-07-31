@@ -12,6 +12,7 @@ export class DashboardComponent {
   targetUrl: string = '';
   shortedUrl: string;
   statusData: any;
+  history: string[] = [];
 
   constructor(private apiService: ApiService) { }
 
@@ -19,9 +20,10 @@ export class DashboardComponent {
     this.apiService.enshort(this.targetUrl).subscribe(
       (data: any) => {
         this.shortedUrl = data.shortedUrl;
+        this.history.push(this.shortedUrl);
       },
       error => {
-        alert(error.message);
+        alert(error.error.message);
       });
   }
 
@@ -32,18 +34,18 @@ export class DashboardComponent {
         this.shortedUrl = '';
       },
       error => {
-        alert(error.message);
+        alert(error.error.message);
       });
   }
 
-  status() {
+  stats() {
     this.apiService.enshort(this.targetUrl).subscribe(
       (data: any) => {
         this.statusData = data;
         console.log(data);
       },
       error => {
-        alert(error.message);
+        alert(error.error.message);
       });
   }
 

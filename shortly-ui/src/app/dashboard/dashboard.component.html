@@ -20,5 +20,14 @@
         <a href="{{shortedUrl}}">{{shortedUrl}}</a>
       </pre>
     </div>
+
+    <div class="row" *ngIf="history.length">
+      <h2>History</h2>
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let url of history">
+          <a href="{{url}}">{{url}}</a>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
